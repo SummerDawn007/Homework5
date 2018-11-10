@@ -16,6 +16,7 @@ public class Asteroids extends Game {
 	static int counter = 0;
 
 	private java.util.List<Asteroid> randomAsteroids = new ArrayList<Asteroid>();
+	private Ship ship;
 
 	public Asteroids() {
 		super("Asteroids!",SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -24,6 +25,12 @@ public class Asteroids extends Game {
 
 		// create a number of random asteroid objects
 		randomAsteroids = createRandomAsteroids(10,60,30);
+		Point[] points = new Point[4];
+		points[0] = new Point(0, 0);
+		points[1] = new Point(50, 25);
+		points[2] = new Point(0, 50);
+		points[3] = new Point(100, 25);
+		ship = new Ship(points, new Point(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0);
 
 	}
 
@@ -78,6 +85,9 @@ public class Asteroids extends Game {
 			asteroid.paint(brush,Color.white);
 			asteroid.move();
 		}
+
+		ship.paint(brush, Color.CYAN);
+		ship.move();
 		
 		/**
 		 * The above for loop (known as a "for each" loop)
