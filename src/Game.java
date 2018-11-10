@@ -14,14 +14,14 @@ public abstract class Game extends Canvas {
 	protected int width, height;
 	protected Image buffer;
 
-	public Game(String name, int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Game(String name, int inWidth, int inHeight) {
+		width = inWidth;
+		height = inHeight;
 
 		// Frame can be read as 'window' here.
 		Frame frame = new Frame(name);
 		frame.add(this);
-		frame.setSize(width, height);
+		frame.setSize(width,height);
 		frame.setVisible(true);
 		frame.setResizable(false);
 		frame.addWindowListener(new WindowAdapter() { 

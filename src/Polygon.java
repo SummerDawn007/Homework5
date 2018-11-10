@@ -16,19 +16,18 @@ NOTE: You don't need to worry about the "magic math" details.
 Original code by Dan Leyzberg and Art Simon
  */
 
-public abstract class Polygon implements Shape {
+public  abstract class Polygon implements Shape {
 	private Point[] shape;   // An array of points.
 	public Point position;   // The offset mentioned above.
 	public double rotation; // Zero degrees is due east.
 
-	public Polygon(Point[] shape, Point position, double rotation) {
-		this.shape = shape;
-		this.position = position;
-		this.rotation = rotation;
+	public Polygon(Point[] inShape, Point inPosition, double inRotation) {
+		shape = inShape;
+		position = inPosition;
+		rotation = inRotation;
 
 		// First, we find the shape's top-most left-most boundary, its origin.
 		Point origin = shape[0].clone();
-
 		for (Point p : shape) {
 			if (p.x < origin.x) origin.x = p.x;
 			if (p.y < origin.y) origin.y = p.y;
@@ -44,10 +43,9 @@ public abstract class Polygon implements Shape {
 	// "getPoints" applies the rotation and offset to the shape of the polygon.
 	public Point[] getPoints() {
 		Point center = findCenter();
-
 		Point[] points = new Point[shape.length];
-
 		for (int i = 0; i < shape.length; i++) {
+			//    for (Point p : shape) {
 			Point p = shape[i];
 			double x = ((p.x-center.x) * Math.cos(Math.toRadians(rotation)))
 					- ((p.y-center.y) * Math.sin(Math.toRadians(rotation)))
@@ -75,10 +73,7 @@ public abstract class Polygon implements Shape {
 		return crossingNumber%2 == 1;
 	}
 
-	public void rotate(int degrees) 
-	{
-		rotation = (rotation+degrees)%360;
-	}
+	public void rotate(int degrees) {rotation = (rotation+degrees)%360;}
 
 	/*
   The following methods are private access restricted because, as this access
@@ -89,11 +84,9 @@ public abstract class Polygon implements Shape {
 	// "findArea" implements some more magic math.
 	private double findArea() {
 		double sum = 0;
-		
 		for (int i = 0, j = 1; i < shape.length; i++, j=(j+1)%shape.length) {
 			sum += shape[i].x*shape[j].y-shape[j].x*shape[i].y;
 		}
-		
 		return Math.abs(sum/2);
 	}
 
@@ -106,7 +99,6 @@ public abstract class Polygon implements Shape {
 			sum.y += (shape[i].y + shape[j].y)
 					* (shape[i].x * shape[j].y - shape[j].x * shape[i].y);
 		}
-		
 		double area = findArea();
 		return new Point(Math.abs(sum.x/(6*area)),Math.abs(sum.y/(6*area)));
 	}
