@@ -53,8 +53,10 @@ public class Ship extends Polygon implements java.awt.event.KeyListener {
 		if(e.getKeyCode() == KeyEvent.VK_UP) {
 			// up arrow key
 			// makes ship go forward
-			
 			forward = true;
+		}
+		else {
+			forward = false;
 		}
 
 		if(e.getKeyCode() == KeyEvent.VK_LEFT) {
