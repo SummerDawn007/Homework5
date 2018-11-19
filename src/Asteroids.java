@@ -25,13 +25,15 @@ public class Asteroids extends Game {
 
 		// create a number of random asteroid objects
 		randomAsteroids = createRandomAsteroids(10,60,30);
+		
 		Point[] points = new Point[4];
 		points[0] = new Point(0, 0);
 		points[1] = new Point(50, 25);
 		points[2] = new Point(0, 50);
 		points[3] = new Point(100, 25);
 		ship = new Ship(points, new Point(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0);
-
+		
+		this.addKeyListener(ship);
 	}
 
 	//  Create an array of random asteroids
@@ -85,8 +87,8 @@ public class Asteroids extends Game {
 			asteroid.paint(brush,Color.white);
 			asteroid.move();
 		}
-
-		ship.paint(brush, Color.CYAN);
+		// display the ship
+		ship.paint(brush, Color.GREEN);
 		ship.move();
 		
 		/**
