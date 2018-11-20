@@ -18,22 +18,39 @@ public class Asteroids extends Game {
 	private java.util.List<Asteroid> randomAsteroids = new ArrayList<Asteroid>();
 	private Ship ship;
 
+	private boolean collisionOccured = false;
+	private int numberCollisions = 100;
+
 	public Asteroids() {
 		super("Asteroids!",SCREEN_WIDTH,SCREEN_HEIGHT);
 		this.setFocusable(true);
 		this.requestFocus();
-
+		
+		// create the ship
+		ship = createShip();
+		this.addKeyListener(ship);
+		
 		// create a number of random asteroid objects
 		randomAsteroids = createRandomAsteroids(10,60,30);
+
 		
-		Point[] points = new Point[4];
-		points[0] = new Point(0, 0);
-		points[1] = new Point(50, 25);
-		points[2] = new Point(0, 50);
-		points[3] = new Point(100, 25);
-		ship = new Ship(points, new Point(SCREEN_WIDTH/2, SCREEN_HEIGHT/2), 0);
-		
-		this.addKeyListener(ship);
+
+	}
+
+	// private helper method to create the Ship
+	private Ship createShip() {
+		// Look of ship
+		Point[] shipShape = {
+				new Point(0, 0),
+				new Point(Ship.SHIP_WIDTH/3.5, Ship.SHIP_HEIGHT/2),
+				new Point(0, Ship.SHIP_HEIGHT),
+				new Point(Ship.SHIP_WIDTH, Ship.SHIP_HEIGHT/2)
+		};
+		// Set ship at the middle of the screen
+		Point startingPosition = new Point((width -Ship.SHIP_WIDTH)/2, (height - Ship.SHIP_HEIGHT)/2);
+		int startingRotation = 0; // Start facing to the right
+		return new Ship(shipShape, startingPosition, startingRotation);	
+
 	}
 
 	//  Create an array of random asteroids
@@ -86,11 +103,29 @@ public class Asteroids extends Game {
 		for (Asteroid asteroid : randomAsteroids) {
 			asteroid.paint(brush,Color.white);
 			asteroid.move();
+			if(ship != null) {
+				collisionOccured = asteroid.collision(ship);	
+			}
+		}
+
+		if(collisionOccured) {
+			numberCollisions--;
+			if (numberCollisions > 0) {
+				ship.paint(brush, Color.RED);
+			}
+			else {
+				ship.paint(brush, Color.GREEN);
+				numberCollisions = 100;
+				collisionOccured = false;
+			}
+		} 
+		else {
+			ship.paint(brush, Color.GREEN);
 		}
 		// display the ship
 		ship.paint(brush, Color.GREEN);
 		ship.move();
-		
+
 		/**
 		 * The above for loop (known as a "for each" loop)
 		 * is equivalent to what is shown below.
@@ -102,7 +137,7 @@ public class Asteroids extends Game {
 			randomAsteroids.get(i).move();
 
 		}
-		*/
+		 */
 	}
 
 	public static void main (String[] args) {

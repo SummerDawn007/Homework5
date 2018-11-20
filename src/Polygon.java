@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.Arrays;
+import java.util.List;
 
 /*
 CLASS: Polygon
@@ -101,5 +103,19 @@ public  abstract class Polygon implements Shape {
 		}
 		double area = findArea();
 		return new Point(Math.abs(sum.x/(6*area)),Math.abs(sum.y/(6*area)));
+	}
+
+	public boolean collision (Polygon ship) {
+
+		// get the Point objects for the Ship
+
+		List<Point> listOfPoints = Arrays.asList(this.shape);
+		List<Point> points = Arrays.asList(ship.getPoints());
+
+		if(listOfPoints.containsAll(points)) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
