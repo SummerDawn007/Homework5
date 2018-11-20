@@ -107,15 +107,13 @@ public  abstract class Polygon implements Shape {
 
 	public boolean collision (Polygon ship) {
 
-		// get the Point objects for the Ship
+		Point[] shipPoints = ship.getPoints();
 
-		List<Point> listOfPoints = Arrays.asList(this.shape);
-		List<Point> points = Arrays.asList(ship.getPoints());
-
-		if(listOfPoints.containsAll(points)) {
-			return true;
-		} else {
-			return false;
+		for(Point p : shipPoints) {
+			if (this.contains(p)) {
+				return true;
+			}
 		}
+		return false;
 	}
 }

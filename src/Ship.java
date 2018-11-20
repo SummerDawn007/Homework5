@@ -17,6 +17,7 @@ public class Ship extends Polygon implements java.awt.event.KeyListener  {
 	private boolean forward = false;
 	private boolean left = false;
 	private boolean right = false;
+	public boolean collisionOccured = false;
 
 	public Ship(Point[] inShape, Point inPosition, double inRotation) {
 		super(inShape, inPosition, inRotation);
